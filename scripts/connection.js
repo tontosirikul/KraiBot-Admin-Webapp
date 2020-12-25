@@ -26,9 +26,9 @@ window.addEventListener("resize", function () {
 });
 
 async function init() {
-  initial = await adminStartup();
-  console.log(initial);
-  handleMode("start-up");
+  // initial = await adminStartup();
+  // console.log(initial);
+  handleMode("nav");
 
   maps = await FetchMap();
   console.log(maps);
