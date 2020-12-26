@@ -36,11 +36,10 @@ async function handleMode(mode) {
       viewer: viewer,
       serverName: "/move_base",
       withOrientation: true,
+      arrowSize: 5
     });
-
     pose_listener_amcl.subscribe(nav_callback);
     gridNavClient.rootObject.addChild(navMarker);
-
     if (teleopOn == true) {
       teleopElems.forEach((teleopElem) => {
         teleopElem.disabled = false;
@@ -120,12 +119,3 @@ async function handleinitpose() {
   return response.json();
 }
 
-async function initposeSend() {
-  const response = await fetch(`http://${localhost}:8000/api/robot_cancel`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ map_index: input }),
-  });
-}

@@ -1,4 +1,4 @@
-const localhost = "172.16.10.20";
+const localhost = "192.168.1.30";
 var ros = new ROSLIB.Ros({});
 var viewer = null;
 var zoomView = null;
@@ -28,7 +28,7 @@ window.addEventListener("resize", function () {
 async function init() {
   initial = await adminStartup();
   console.log(initial);
-  handleMode("nav");
+  handleMode("start-up");
 
   maps = await FetchMap();
   console.log(maps);
@@ -123,28 +123,21 @@ async function adminStartup() {
   return response.json();
 }
 
-// window.onbeforeunload = function (e) {
-//   e = e || window.event;
-
-//   // For IE and Firefox prior to version 4
-//   if (e) {
-//     e.returnValue = "Sure?";
-//   }
-
-//   // For Safari
-//   return "Sure?";
-// };
-
 async function setDefault() {
+  console.log("passed");
   initial = await adminStartup();
   console.log(initial);
   handleMode("start-up");
+
+  maps = await FetchMap();
+  console.log(maps);
+  queryMaps(maps);
+
   // occupy new grid client
   gridClient = new ROS2D.OccupancyGridClient({
     ros: ros,
     rootObject: viewer.scene,
     continuous: true,
-    // continuous: continuous,
   });
   // Scale the canvas to fit to the map
   gridClient.on("change", function () {
@@ -159,3 +152,16 @@ async function setDefault() {
     registerMouseHandlers();
   });
 }
+
+window.onbeforeunload = function (e) {
+  e = e || window.event;
+  ros.close();
+  console.log(ros.isConnected);
+  // For IE and Firefox prior to version 4
+  if (e) {
+    e.returnValue = "Sure?";
+  }
+
+  // For Safari
+  return "Sure?";
+};

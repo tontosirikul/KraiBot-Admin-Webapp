@@ -69,8 +69,8 @@ async function handleCreatemap() {
     handleMode("slam");
     createMap(mapname);
   } else {
-    await setDefault();
     //window.location.reload();
+    await setDefault();
   }
 }
 
