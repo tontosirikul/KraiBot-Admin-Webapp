@@ -48,7 +48,8 @@ async function handleDeactivemap() {
   deactiveElem.classList.add("mui-btn--primary");
   deactiveElem.removeAttribute("onclick");
   deactiveElem.setAttribute("onclick", "handleActivemap()");
-  window.location.reload();
+  //window.location.reload();
+  await setDefault();
 }
 
 async function MapServer(input) {
@@ -68,7 +69,8 @@ async function handleCreatemap() {
     handleMode("slam");
     createMap(mapname);
   } else {
-    window.location.reload();
+    await setDefault();
+    //window.location.reload();
   }
 }
 
@@ -91,7 +93,8 @@ async function handleSavemap() {
   } else {
     await saveMap("NO");
   }
-  window.location.reload();
+  //window.location.reload();
+  await setDefault();
 }
 
 async function saveMap(input) {
@@ -111,7 +114,8 @@ async function handleDeletemap() {
   if (confirm) {
     deleteMap(selectElem.value);
   }
-  window.location.reload();
+  //window.location.reload();
+  await setDefault();
 }
 
 async function deleteMap(input) {

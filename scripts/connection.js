@@ -26,8 +26,8 @@ window.addEventListener("resize", function () {
 });
 
 async function init() {
-  // initial = await adminStartup();
-  // console.log(initial);
+  initial = await adminStartup();
+  console.log(initial);
   handleMode("nav");
 
   maps = await FetchMap();
@@ -134,3 +134,28 @@ async function adminStartup() {
 //   // For Safari
 //   return "Sure?";
 // };
+
+async function setDefault() {
+  initial = await adminStartup();
+  console.log(initial);
+  handleMode("start-up");
+  // occupy new grid client
+  gridClient = new ROS2D.OccupancyGridClient({
+    ros: ros,
+    rootObject: viewer.scene,
+    continuous: true,
+    // continuous: continuous,
+  });
+  // Scale the canvas to fit to the map
+  gridClient.on("change", function () {
+    viewer.scaleToDimensions(
+      gridClient.currentGrid.width,
+      gridClient.currentGrid.height
+    );
+    viewer.shift(
+      gridClient.currentGrid.pose.position.x,
+      gridClient.currentGrid.pose.position.y
+    );
+    registerMouseHandlers();
+  });
+}

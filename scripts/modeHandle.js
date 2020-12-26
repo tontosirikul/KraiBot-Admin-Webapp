@@ -37,8 +37,10 @@ async function handleMode(mode) {
       serverName: "/move_base",
       withOrientation: true,
     });
+
     pose_listener_amcl.subscribe(nav_callback);
     gridNavClient.rootObject.addChild(navMarker);
+
     if (teleopOn == true) {
       teleopElems.forEach((teleopElem) => {
         teleopElem.disabled = false;
@@ -86,7 +88,7 @@ async function handleMode(mode) {
   }
 }
 
-function handleStopnavigation() {
+async function handleStopnavigation() {
   const nav = document.querySelector(".navigationBtn");
   nav.innerText = "NAVIGATION";
   nav.classList.add(".navigationBtn");
@@ -94,7 +96,8 @@ function handleStopnavigation() {
   nav.classList.remove("mui-btn--danger");
   nav.classList.remove(".handleStopnavigation");
   nav.setAttribute("onclick", "handleMode('nav')");
-  window.location.reload();
+  //window.location.reload();
+  await setDefault();
 }
 
 async function handleemergency() {
